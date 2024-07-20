@@ -16,12 +16,8 @@
           users.users.root = {
             initialPassword = "test";
           };
-
-          environment.systemPackages = with pkgs; [
-            cowsay
-            lolcat
-          ];
-
+          services.openssh.enable = true;
+          networking.firewall.enable = false;
           system.stateVersion = "23.11";
 
           # Add any VM-specific configurations here
