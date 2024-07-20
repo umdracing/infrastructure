@@ -14,7 +14,7 @@
         buildInputs = with pkgs; [
           git
           nixos-shell # Spawns lightweight nixos vms in a shell
-          colmena.packages.${system}.colmena
+          colmena # A simple, stateless NixOS deployment tool
         ];
         shellHook = ''
           echo "Welcome to the dev environment!"
