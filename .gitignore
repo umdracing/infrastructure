@@ -2,3 +2,4 @@ vps/bin/*
 vps/secrets/*
 !vps/bin/README.md
 !vps/secrets/README.md
+*.qcow2
