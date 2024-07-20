@@ -12,14 +12,17 @@
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          nixos-shell
           git
+          pipewire
+          jack2
+          qemu
+          nixos-shell # Spawns lightweight nixos vms in a shell
         ];
 
         shellHook = ''
           echo "Welcome to the dev environment!"
           echo "Launch VM with the following command:"
-          echo "nixos-shell --flake ./vps/flake.nix#default"
+          echo "nixos-shell --flake ./vps#default"
         '';
       };
     };
