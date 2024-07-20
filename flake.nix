@@ -1,7 +1,7 @@
 {
   description = "Development environment for VPS management";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     #colmena.url = "github:zhaofengli/colmena";
   };
   outputs = { self, nixpkgs }:
