@@ -13,9 +13,6 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           git
-          pipewire
-          jack2
-          qemu
           nixos-shell # Spawns lightweight nixos vms in a shell
           colmena.packages.${system}.colmena
         ];
