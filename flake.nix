@@ -2,9 +2,9 @@
   description = "Development environment for VPS management";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    colmena.url = "github:zhaofengli/colmena";
+    #colmena.url = "github:zhaofengli/colmena";
   };
-  outputs = { self, nixpkgs, colmena }:
+  outputs = { self, nixpkgs }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
