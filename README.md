@@ -14,3 +14,9 @@ This repository aims to track the configuration of the IT infrastructure, using 
 ## Setup
 
 Will follow, probably via nix-develop
+
+## Use
+Enter the dev env with
+```bash
+$ nix develop -i
+```
