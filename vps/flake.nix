@@ -6,39 +6,38 @@
   };
 
   outputs = { self, nixpkgs }: {
-    defaults = { pkgs, ... }: {
-      boot.loader.systemd-boot.enable = true;
-      boot.loader.efi.canTouchEfiVariables = true;
-
-      users.users.root = {
-        initialPassword = "test";
+    colmena = {
+      meta = {
+        nixpkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = [];
+        };
       };
 
-      environment.systemPackages = with pkgs; [
-        cowsay
-        lolcat
-      ];
-
-      system.stateVersion = "23.11";
-    };
-
-    vm = { name, nodes, ... }: {
-      deployment = {
-        targetUser = "root";
-        targetHost = "localhost";
-        buildOnTarget = true;
-      };
-    };
-
-    production = { name, nodes, ... }: {
-      deployment = {
-        targetUser = "root";
-        targetHost = "your-production-ip-or-domain";
-        buildOnTarget = true;
+      defaults = { pkgs, ... }: {
+        environment.systemPackages = with pkgs; [
+          cowsay
+          lolcat
+        ];
+        system.stateVersion = "23.11";
       };
 
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
-    };
+      vm = { name, nodes, ... }: {
+        deployment = {
+          targetUser = "root";
+          targetHost = "localhost";
+          buildOnTarget = true;
+        };
+      };
 
+      production = { name, nodes, ... }: {
+        deployment = {
+          targetUser = "root";
+          targetHost = "your-production-ip-or-domain";
+          buildOnTarget = true;
+        };
+        networking.firewall.allowedTCPPorts = [ 80 443 ];
+      };
+    };
   };
 }
