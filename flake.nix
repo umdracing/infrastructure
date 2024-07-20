@@ -18,7 +18,7 @@
         shellHook = ''
           echo "Welcome to the dev environment!"
           echo "Launch VM with the following command:"
-          echo "nixos-shell --flake ./vps/flake.nix#default#
+          echo "nixos-shell --flake ./vps/flake.nix#default"
         '';
       };
     };
