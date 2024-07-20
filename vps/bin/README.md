@@ -1,0 +1,1 @@
+This directory exists for binaries, that are not in nixpkgs and need to be provided separately, in particular Siemens Licensing Software. The binaries should not be committed.

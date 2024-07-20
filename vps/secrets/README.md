@@ -1,0 +1,1 @@
+Directory for the sops-nix secrets. These will not be tracked by Git.
