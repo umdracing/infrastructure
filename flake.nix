@@ -16,7 +16,9 @@
         ];
 
         shellHook = ''
-          echo "Welcome to the minimal dev environment!"
+          echo "Welcome to the dev environment!"
+          echo "Launch VM with the following command:"
+          echo "nixos-shell --flake ./vps/flake.nix#default#
         '';
       };
     };
