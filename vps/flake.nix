@@ -10,7 +10,7 @@
       meta = {
         nixpkgs = import nixpkgs {
           system = "x86_64-linux";
-          overlays = [];
+          overlays = [ ];
         };
       };
 
@@ -32,12 +32,12 @@
           #allowLocalDeployment = true;
           buildOnTarget = true;
         };
-        boot.loader.grub.device = "/dev/sda";
+        boot.loader.grub.device = "/dev/vda";
         fileSystems."/" = {
-          device = "/dev/sda1";
+          device = "/dev/vda1";
           fsType = "ext4";
         };
-        
+
       };
 
       production = { name, nodes, ... }: {
