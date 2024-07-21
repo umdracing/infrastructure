@@ -19,8 +19,6 @@
           cowsay
           lolcat
         ];
-        #services.openssh.enable = true;
-
         system.stateVersion = "23.11";
       };
 
@@ -29,15 +27,14 @@
           targetUser = "root";
           targetHost = "localhost";
           targetPort = 2222;
-          #allowLocalDeployment = true;
           buildOnTarget = true;
+          sshOptions = [ "-t" ];
         };
         boot.loader.grub.device = "/dev/vda";
         fileSystems."/" = {
           device = "/dev/vda1";
           fsType = "ext4";
         };
-
       };
 
       production = { name, nodes, ... }: {
