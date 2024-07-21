@@ -10,7 +10,6 @@
       system = "x86_64-linux";
       modules = [
         ({ config, pkgs, ... }: {
-          imports = [ <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> ];
           boot.loader.systemd-boot.enable = true;
           boot.loader.efi.canTouchEfiVariables = true;
 
@@ -22,8 +21,14 @@
           networking.firewall.enable = false;
           system.stateVersion = "23.11";
 
+          nixos-shell.mounts = {
+            mountHome = false;
+            mountNixProfile = false;
+            cache = "none"; # default is "loose"
+          };
+
           # Add any VM-specific configurations here
-          virtualisation = {
+          virtualisation.vmVariant = {
             forwardPorts = [
               { from = "host"; host.port = 2222; guest.port = 22; }
             ];
