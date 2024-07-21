@@ -19,7 +19,6 @@
           git # Distributed version control system
           nixos-shell # Spawns lightweight nixos vms in a shell
           colmena # A simple, stateless NixOS deployment tool
-          vagrant # Tool for building complete development environments
         ];
         shellHook = ''
           echo "Welcome to the dev environment!"
@@ -31,7 +30,6 @@
           echo "colmena apply --on vm"
           echo "colmena apply --on production"
           
-          vagrant plugin install vagrant-nixos-plugin
         '';
       };
     };
