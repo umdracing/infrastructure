@@ -21,7 +21,12 @@
           networking.firewall.enable = false;
           services.openssh.enable = true;
           services.getty.autologinUser = "root";
-          users.users.root.password = "";
+          users.users.root = {
+            password = "";
+            openssh.authorizedKeys.keys = [
+              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF/lGvDlF6HrUaCoZuzbttrcazgSaEkEfnsjADikO3/d"
+            ];
+          };
 
           nixos-shell.mounts = {
             mountHome = false;

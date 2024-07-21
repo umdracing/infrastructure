@@ -13,7 +13,15 @@ This repository aims to track the configuration of the IT infrastructure, using 
 
 ## Setup
 
-Will follow, probably via nix-develop
+Create personal SSH key for testing purposes, e.g. using ```ssh-keygen -t ed25519```, and add the following to your ```~/.ssh/config``` file on your host machine:
+```
+Host localhost
+    IdentityFile ~/.ssh/your-newly-created-keyfile
+    Port 2222
+```
+Next, add your public key to the authorized keys in ```./vps/vm/flake.nix```. This approach will likely change in the future.
+
+Note also, that this affects any localhost ssh connections on your device, which may interfere with other projects.
 
 ## Use
 Enter the dev env with
