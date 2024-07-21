@@ -19,9 +19,11 @@
           echo "Welcome to the dev environment!"
           echo "Launch VM with the following command:"
           echo "nixos-shell --flake ./vps/vm#vm"
+          echo ""
+          echo "Navigate to machine directory (e.g. vps/)"
           echo "Deploy to VM or production with:"
-          echo "colmena apply --on @vm"
-          echo "colmena apply --on @production"
+          echo "colmena apply --on vm"
+          echo "colmena apply --on production"
         '';
       };
     };
