@@ -1,38 +1,50 @@
 {
-  description = "NixOS configuration for vm clone of VPS";
+  description = "Single NixOS VM configuration for nixos-shell";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixos-shell.url = "github:Mic92/nixos-shell";
   };
 
-  outputs = { self, nixpkgs }: {
+  outputs = { self, nixpkgs, nixos-shell }: {
     nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ({ config, pkgs, ... }: {
-          boot.loader.systemd-boot.enable = true;
-          boot.loader.efi.canTouchEfiVariables = true;
+          imports = [ nixos-shell.nixosModules.nixos-shell ];
 
-          users.users.alice = {
-            isNormalUser = true;
-            initialPassword = "test";
-          };
-          services.openssh.enable = true;
+          boot.loader.grub.enable = false;
+          boot.loader.systemd-boot.enable = true;
+
+          networking.useDHCP = false;
+          networking.interfaces.eth0.useDHCP = true;
           networking.firewall.enable = false;
-          system.stateVersion = "23.11";
+          services.openssh.enable = true;
+          services.getty.autologinUser = "root";
+          users.users.root.password = "";
 
           nixos-shell.mounts = {
             mountHome = false;
             mountNixProfile = false;
             cache = "none"; # default is "loose"
           };
+          nix.extraOptions = "experimental-features = nix-command flakes";
 
-          # Add any VM-specific configurations here
+          environment.systemPackages = with pkgs; [
+            git
+            htop
+          ];
+
           virtualisation.vmVariant = {
+            cores = 2;
+            memorySize = 4096;
+            diskImage = "./vps/vm/nixos.qcow2";
             forwardPorts = [
               { from = "host"; host.port = 2222; guest.port = 22; }
             ];
           };
+
+          system.stateVersion = "23.11";
         })
       ];
     };
