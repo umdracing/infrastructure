@@ -35,7 +35,7 @@
             htop
           ];
 
-          virtualisation.vmVariant = {
+          virtualisation = {
             cores = 2;
             memorySize = 4096;
             diskImage = "./vps/vm/nixos.qcow2";
