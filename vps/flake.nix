@@ -28,6 +28,11 @@
           targetHost = "localhost";
           targetPort = 2222;
           buildOnTarget = true;
+          sshOptions = [
+            "-o StrictHostKeyChecking=no"
+            "-o UserKnownHostsFile=/dev/null"
+            "-i ${builtins.getEnv "VAGRANT_SSH_KEY"}"
+          ];
         };
         boot.loader.grub.device = "/dev/vda";
         fileSystems."/" = {
