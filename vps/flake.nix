@@ -28,7 +28,6 @@
           targetHost = "localhost";
           targetPort = 2222;
           buildOnTarget = true;
-          sshOptions = [ "-t" ];
         };
         boot.loader.grub.device = "/dev/vda";
         fileSystems."/" = {
