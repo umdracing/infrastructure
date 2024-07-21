@@ -6,14 +6,20 @@
   outputs = { self, nixpkgs }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+      };
     in
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          git
+          git # Distributed version control system
           nixos-shell # Spawns lightweight nixos vms in a shell
           colmena # A simple, stateless NixOS deployment tool
+          vagrant # Tool for building complete development environments
         ];
         shellHook = ''
           echo "Welcome to the dev environment!"
@@ -24,6 +30,8 @@
           echo "Deploy to VM or production with:"
           echo "colmena apply --on vm"
           echo "colmena apply --on production"
+          
+          vagrant plugin install vagrant-nixos-plugin
         '';
       };
     };
