@@ -18,7 +18,7 @@
         shellHook = ''
           echo "Welcome to the dev environment!"
           echo "Launch VM with the following command:"
-          echo "nixos-shell --flake ./vps#vm"
+          echo "nixos-shell --flake ./vps/vm#vm"
           echo "Deploy to VM or production with:"
           echo "colmena apply --on @vm"
           echo "colmena apply --on @production"

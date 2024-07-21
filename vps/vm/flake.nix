@@ -10,10 +10,12 @@
       system = "x86_64-linux";
       modules = [
         ({ config, pkgs, ... }: {
+          imports = [ <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> ];
           boot.loader.systemd-boot.enable = true;
           boot.loader.efi.canTouchEfiVariables = true;
 
-          users.users.root = {
+          users.users.alice = {
+            isNormalUser = true;
             initialPassword = "test";
           };
           services.openssh.enable = true;
@@ -21,7 +23,11 @@
           system.stateVersion = "23.11";
 
           # Add any VM-specific configurations here
-          virtualisation.vmware.guest.enable = true;
+          virtualisation = {
+            forwardPorts = [
+              { from = "host"; host.port = 2222; guest.port = 22; }
+            ];
+          };
         })
       ];
     };

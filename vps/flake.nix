@@ -19,7 +19,8 @@
           cowsay
           lolcat
         ];
-        services.openssh.enable = true;
+        #services.openssh.enable = true;
+
         system.stateVersion = "23.11";
       };
 
@@ -27,6 +28,7 @@
         deployment = {
           targetUser = "root";
           targetHost = "localhost";
+          targetPort = 2222;
           #allowLocalDeployment = true;
           buildOnTarget = true;
         };
