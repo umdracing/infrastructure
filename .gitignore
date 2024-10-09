@@ -4,4 +4,3 @@ vps/secrets/*
 !vps/secrets/README.md
 *.qcow2
 */vm/.vagrant
-*.lock
