@@ -23,12 +23,12 @@
           echo ""
           echo "Create and launch VM with the following command:"
           echo ""
-          echo "nix run ./minimal-vm#nixosConfigurations.vm.config.system.build.vm"
+          echo "nix run ./vps#nixosConfigurations.vm.config.system.build.vm"
           echo ""
           echo "This should start a wordpress instance, that can be reached under:"
           echo "http://localhost:8080"
           echo ""
-          echo "You can connect to the VM with the following command, assuming that you added your SSH ke>
+          echo "You can connect to the VM with the following command, assuming that you added your SSH key to the config:"
           echo "ssh -p 2222 -i ssh/your-ssh-key-if-not-default admin@localhost"
         '';
       };
