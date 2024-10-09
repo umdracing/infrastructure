@@ -1,48 +1,57 @@
 {
-  description = "NixOS configuration for VPS";
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs }: {
-    colmena = {
-      meta = {
-        nixpkgs = import nixpkgs {
-          system = "x86_64-linux";
-          overlays = [ ];
+  outputs = { self, nixpkgs, ... }@inputs:
+  let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+
+    # Common configuration for both VM and VPS
+    commonModules = [
+        ./server/configuration.nix
+        ./server/hardware.nix
+        ./server/locale.nix
+        ./server/packages.nix
+        ./server/ssh.nix
+        ./server/users.nix
+        ./services/wordpress.nix
+    ];
+
+    # VM-specific configuration
+    vmModules = [
+      ({ config, pkgs, modulesPath, ... }: {
+        virtualisation.vmVariant = {
+          # VM-specific options
+          #imports = [ (modulesPath + "/virtualisation/qemu-vm.nix") ];
+          virtualisation.memorySize = 2048; # Example: 2GB RAM
+          virtualisation.cores = 2;         # Example: 2 CPU cores
+          virtualisation.forwardPorts = [
+            { from = "host"; host.port = 2222; guest.port = 45432; } # SSH port
+            { from = "host"; host.port = 8080; guest.port = 80; } # Http port, initally for Wordpress
+          ];
         };
+      })
+    ];
+
+    # VPS-specific configuration (if any)
+    vpsModules = [
+      # Add any VPS-specific modules or options
+    ];
+  in
+  {
+    nixosConfigurations = {
+      # Configuration for VM
+      vm = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = commonModules ++ vmModules;
       };
 
-      defaults = { pkgs, ... }: {
-        environment.systemPackages = with pkgs; [
-          cowsay
-          lolcat
-        ];
-        system.stateVersion = "23.11";
-      };
-
-      vm = { name, nodes, ... }: {
-        deployment = {
-          targetUser = "root";
-          targetHost = "localhost";
-          targetPort = 2222;
-          buildOnTarget = true;
-        };
-        boot.loader.grub.device = "/dev/vda";
-        fileSystems."/" = {
-          device = "/dev/vda1";
-          fsType = "ext4";
-        };
-      };
-
-      production = { name, nodes, ... }: {
-        deployment = {
-          targetUser = "root";
-          targetHost = "your-production-ip-or-domain";
-          buildOnTarget = true;
-        };
-        networking.firewall.allowedTCPPorts = [ 80 443 ];
+      # Configuration for VPS
+      vps = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = commonModules ++ vpsModules;
       };
     };
   };

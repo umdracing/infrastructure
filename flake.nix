@@ -17,19 +17,19 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           git # Distributed version control system
-          nixos-shell # Spawns lightweight nixos vms in a shell
-          colmena # A simple, stateless NixOS deployment tool
         ];
         shellHook = ''
           echo "Welcome to the dev environment!"
-          echo "Launch VM with the following command:"
-          echo "nixos-shell --flake ./vps/vm#vm"
           echo ""
-          echo "Navigate to machine directory (e.g. vps/)"
-          echo "Deploy to VM or production with:"
-          echo "colmena apply --on vm"
-          echo "colmena apply --on production"
-          
+          echo "Create and launch VM with the following command:"
+          echo ""
+          echo "nix run ./minimal-vm#nixosConfigurations.vm.config.system.build.vm"
+          echo ""
+          echo "This should start a wordpress instance, that can be reached under:"
+          echo "http://localhost:8080"
+          echo ""
+          echo "You can connect to the VM with the following command, assuming that you added your SSH ke>
+          echo "ssh -p 2222 -i ssh/your-ssh-key-if-not-default admin@localhost"
         '';
       };
     };
